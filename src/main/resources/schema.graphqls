@@ -1,0 +1,65 @@
+type Query {
+    students: [Student]
+    allCraftsmen: [Craftsman]
+}
+
+type Student {
+    firstName: String
+    lastName: String
+}
+
+type Craftsman {
+    id: String!
+    firstName: String
+    lastName: String
+    email: String
+    pictures: [Picture]
+    craftsmanProfile: CraftsmanProfile
+}
+
+type CraftsmanProfile {
+    id: String!
+    address: Address
+    phoneNumber: String
+    craftsmanSkills: [CraftsmanSkill]
+}
+
+type Address {
+    address1: String
+    address2: String
+    city: String
+    region: String
+    zipCode: String
+}
+
+type CraftsmanSkill {
+    id: String!
+    craftsmanProfile: CraftsmanProfile
+    skill: Skill
+    level: Level
+}
+
+type Picture {
+    id: String!
+    location: String!
+}
+
+type Skill {
+    id: String!
+    name: String
+    description: String
+    category: Category
+    craftsmen: [CraftsmanSkill]
+}
+
+type Category {
+    id: String!
+    name: String
+    description: String
+}
+
+enum Level {
+    BEGINNER
+    INTERMEDIATE
+    EXPERT
+}
