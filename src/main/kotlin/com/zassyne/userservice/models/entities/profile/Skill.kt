@@ -1,7 +1,7 @@
 package com.zassyne.userservice.models.entities.profile
 
-import com.zassyne.userservice.models.entities.user.CraftsmanSkill
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.zassyne.userservice.models.entities.user.CraftsmanSkill
 import org.hibernate.annotations.Immutable
 import javax.persistence.*
 
@@ -23,6 +23,6 @@ class Skill {
     var category: Category? = null
 
     @JsonIgnore
-    @OneToMany(mappedBy = "skill")
+    @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
     var craftsmen = mutableListOf<CraftsmanSkill>()
 }

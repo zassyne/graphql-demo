@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlinVersion = '1.2.71'
+        kotlinVersion = '1.3.20'
         springBootVersion = '2.1.1.RELEASE'
     }
     repositories {
@@ -47,24 +47,20 @@ ext {
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
-
-    implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
-    implementation 'org.springframework.cloud:spring-cloud-starter-security'
-
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("com.h2database:h2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
-    compile group: 'com.graphql-java', name: 'graphql-spring-boot-starter', version: '4.0.0'
-    compile group: 'com.graphql-java', name: 'graphql-java-tools', version: '4.3.0'
-    compile group: 'com.graphql-java', name: 'graphiql-spring-boot-starter', version: '4.0.0'
-
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation ("com.h2database:h2")
+    implementation("org.springframework.boot:spring-boot-devtools")
+
+    // graphql dependencies - code-first style
+    implementation group: 'io.leangen.graphql', name: 'spqr', version: '0.9.5'
+    implementation group: 'com.graphql-java', name: 'graphql-spring-boot-starter', version: '3.10.0'
+    implementation group: 'com.graphql-java', name: 'graphiql-spring-boot-starter', version: '3.10.0'
 }
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
     }
 }

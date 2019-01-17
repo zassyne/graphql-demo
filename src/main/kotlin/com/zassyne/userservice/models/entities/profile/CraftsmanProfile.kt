@@ -1,38 +1,24 @@
 package com.zassyne.userservice.models.entities.profile
 
+import com.zassyne.userservice.models.entities.user.Craftsman
 import com.zassyne.userservice.models.entities.user.CraftsmanSkill
 import javax.persistence.*
 
 @Entity
 @DiscriminatorValue(value = "CRAFTSMAN_PROFILE")
-@NamedEntityGraphs(
-        NamedEntityGraph(
-                name = "profileWithSkills", attributeNodes = [NamedAttributeNode("craftsmanSkills", subgraph = "craftsmanSkillWithAll")],
-                subgraphs = [
-                    NamedSubgraph(
-                            name = "craftsmanSkillWithAll",
-                            attributeNodes = [
-                                NamedAttributeNode("craftsmanProfile"), NamedAttributeNode("skill", subgraph = "")] )
-        ])
-)
 class CraftsmanProfile : Profile() {
 
-    @OneToMany(mappedBy = "craftsmanProfile", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val craftsmanSkills = mutableListOf<CraftsmanSkill>()
+    @OneToMany(mappedBy = "profile", fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
+    var craftsmanSkills = mutableListOf<CraftsmanSkill>()
 
-    fun addSkill(skill: Skill, level: Level) {
+    @OneToOne(mappedBy = "craftsmanProfile", fetch = FetchType.LAZY)
+    var craftsman: Craftsman? = null
+
+    fun addSkill(skill: Skill, level: Level? = Level.INTERMEDIATE) {
         craftsmanSkills.add(CraftsmanSkill().also {
-            it.craftsmanProfile = this
+            it.profile = this
             it.level = level
             it.skill = skill
         })
     }
-
-    //    public List<Skill> getSkills() {
-    //        return this.craftsmanSkills
-    //                .stream()
-    //                .map(CraftsmanSkill::getSkill)
-    //                .collect(Collectors.toList());
-    //    }
-
 }

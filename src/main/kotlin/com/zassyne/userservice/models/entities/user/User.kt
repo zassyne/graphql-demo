@@ -22,9 +22,12 @@ abstract class User : Serializable {
     @Column(name = "email")
     var email: String? = null
 
-    @OneToMany(mappedBy = "user", cascade = [CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
-    var pictures = mutableListOf<Picture>()
+    @OneToMany(
+        mappedBy = "user",
+        cascade = [CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE],
+        fetch = FetchType.LAZY
+    )
+    var pictures = mutableSetOf<Picture>()
 
     fun addPicture(picture: Picture) {
         this.pictures.add(picture)

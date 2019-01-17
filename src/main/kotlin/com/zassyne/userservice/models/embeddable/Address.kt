@@ -21,3 +21,6 @@ class Address : Serializable {
     @Size(max = 6)
     var zipCode: String? = null
 }
+
+
+
